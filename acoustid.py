@@ -28,7 +28,9 @@ except ImportError:
 try:
     import chromaprint
 
-    have_chromaprint = True
+    have_chromaprint = (
+        chromaprint._libchromaprint is not None
+    )  # sets to true for native library found and false,no system-wide discovery chromaprint library found
 except ImportError:
     have_chromaprint = False
 import gzip
@@ -45,6 +47,18 @@ FPCALC_COMMAND = "fpcalc"
 FPCALC_ENVVAR = "FPCALC"
 MAX_BIT_ERROR = 2  # comparison settings
 MAX_ALIGN_OFFSET = 120
+
+
+def loader(path):
+    """Load the Chromaprint shared library from an explicit path."""
+    global have_chromaprint
+
+    import chromaprint
+
+    library = chromaprint.loader(path)
+    have_chromaprint = (
+        True  # sets flag if loader succeds in loading the library from the given path
+    )
 
 
 # Exceptions.
