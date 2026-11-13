@@ -25,14 +25,13 @@ try:
     have_audioread = True
 except ImportError:
     have_audioread = False
-try:
-    import chromaprint
 
-    have_chromaprint = (
-        chromaprint._libchromaprint is not None
-    )  # sets to true for native library found and false,no system-wide discovery chromaprint library found
-except ImportError:
-    have_chromaprint = False
+import chromaprint
+
+have_chromaprint = (
+    chromaprint._libchromaprint is not None
+)  # sets to true if  native library found for system-wide discovery
+
 import gzip
 import subprocess
 import threading
